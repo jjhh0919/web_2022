@@ -1,0 +1,23 @@
+{
+  "name": "web_2022",
+  "version": "1.0.0",
+  "description": "1. 타입스크립트 공부하기\r 2. 알고리즘 공부하기(자바스크립트)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjhh0919/webdev2022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjhh0919/webdev2022/issues"
+  },
+  "homepage": "https://github.com/jjhh0919/webdev2022#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "prettier": "2.7.1"
+  }
+}
