@@ -39,4 +39,5 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
 /*
 시간복잡도 : O(nlogn)
 Worst : O(n²)
+공간복잡도 : O(logn)
 */
