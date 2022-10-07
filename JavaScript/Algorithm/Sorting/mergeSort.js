@@ -41,5 +41,5 @@ function mergeSort(arr) {
 
 /*
 시간복잡도 : O(nlogn)
-선형 : O(n)
+공간복잡도 : O(n)
 */
