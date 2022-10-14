@@ -1,60 +1,48 @@
 /*
-배열 : 각 데이트 엘리먼트들은 위치가 지정, 인덱스(번호) 부여
-연결 리스트 : 인덱스 없이 다수의 데이터 엘리먼트들로 구성
-
-head : 연결 리스트의 시작 노드
-tail : 연결 리스트의 마지막 노드
-length : 연결 리스트의 길이
-
-인덱스 없이 하나의 노드들은 각각 다음 노드를 카리키는 식
+단일 연결 리스트와 유사하지만 리스트에 있는 모든 노드들은 앞으로 가는 포인터도 있지만 뒤로 가는 포인터도 있음
 */
 
-// 단방향 연결 리스트
 class Node {
   constructor(val) {
     this.val = val;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class SinglyLinkedList {
+class DoublyLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
     this.length = 0;
   }
-
   push(val) {
     const newNode = new Node(val);
-    if (!this.head) {
+    if (this.length === 0) {
       this.head = newNode;
-      this.tail = this.head;
+      this.tail = newNode;
     } else {
       this.tail.next = newNode;
+      newNode.prev = this.tail;
       this.tail = newNode;
     }
     this.length++;
     return this;
   }
-
   pop() {
     if (!this.head) return undefined;
-    let current = this.head;
-    let newTail = current;
-    while (current.next) {
-      newTail = current;
-      current = current.next;
-    }
-    this.tail = newTail;
-    this.tail.next = null;
-    this.length--;
-    if (this.length === 0) {
+    const poppedNode = this.tail;
+    if (this.length === 1) {
       this.head = null;
       this.tail = null;
+    } else {
+      this.tail = poppedNode.prev;
+      this.tail.next = null;
+      poppedNode.prev = null;
     }
-    return current;
+    this.length--;
+    return poppedNode;
   }
-
   shift() {
     if (!this.head) return undefined;
     const currentHead = this.head;
@@ -65,7 +53,6 @@ class SinglyLinkedList {
     }
     return currentHead;
   }
-
   unshift(val) {
     const newNode = new Node(val);
     if (!this.head) {
@@ -77,65 +64,64 @@ class SinglyLinkedList {
     this.length++;
     return this;
   }
-
   get(index) {
     if (index < 0 || index >= this.length) return null;
-    let counter = 0;
-    let current = this.head;
-    while (counter !== index) {
-      current = current.next;
-      counter++;
+    let count, current;
+    if (index <= this.length / 2) {
+      count = 0;
+      current = this.head;
+      while (count !== index) {
+        current = current.next;
+        count++;
+      }
+    } else {
+      count = this.length - 1;
+      current = this.tail;
+      while (count !== index) {
+        current = current.prev;
+        count--;
+      }
     }
     return current;
   }
-
   set(index, val) {
-    let foundNode = this.get(index);
-    if (foundNode) {
+    const foundNode = this.get(index);
+    if (foundNode != null) {
       foundNode.val = val;
       return true;
     }
     return false;
   }
-
   insert(index, val) {
     if (index < 0 || index > this.length) return false;
-    if (index === this.length) return !!this.push(val);
     if (index === 0) return !!this.unshift(val);
+    if (index === this.length) return !!this.push(val);
 
     const newNode = new Node(val);
-    const prev = this.get(index - 1);
-    const temp = prev.next;
-    prev.next = newNode;
-    newNode.next = temp;
+    const beforeNode = this.get(index - 1);
+    const afterNode = beforeNode.next;
+
+    beforeNode.next = newNode;
+    newNode.prev = beforeNode;
+    newNode.next = afterNode;
+    afterNode.prev = newNode;
     this.length++;
     return true;
   }
-
   remove(index) {
     if (index < 0 || index >= this.length) return undefined;
     if (index === 0) return this.shift();
     if (index === this.length - 1) return this.pop();
-    const previousNode = this.get(index - 1);
-    const removed = previousNode.next;
-    previousNode.next = removed.next;
-    this.length--;
-    return removed;
-  }
+    const removedNode = this.get(index);
+    const beforeNode = removedNode.prev;
+    const afterNode = removedNode.next;
 
-  reverse() {
-    let node = this.head;
-    this.head = this.tail;
-    this.tail = node;
-    let next;
-    let prev = null;
-    for (let i = 0; i < this.length; i++) {
-      next = node.next;
-      node.next = prev;
-      prev = node;
-      node = next;
-    }
-    return this;
+    beforeNode.next = afterNode;
+    afterNode.prev = beforeNode;
+    removedNode.next = null;
+    removedNode.prev = null;
+    this.length--;
+    return removedNode;
   }
   print() {
     const arr = [];
@@ -148,7 +134,7 @@ class SinglyLinkedList {
   }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 list.push("first");
 list.push("second");
 list.push("third");
@@ -158,13 +144,4 @@ list.unshift("fourth");
 list.unshift("fifth");
 list.insert(3, "sixth");
 list.remove(2);
-list.reverse();
 list.print();
-
-/*
-시간복잡도
-삽입 : O(1)
-삭제 : 위치에 따라 O(1) or O(n)
-검색 : O(n)
-접근 : O(n)
-*/
