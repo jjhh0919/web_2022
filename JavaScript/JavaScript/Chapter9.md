@@ -37,3 +37,101 @@
 * 불리언 값으로 평가되어야 할 문맥에서 Truthy → true로, Falsy → false로 암묵적 타입 변환
 * Falsy 값 : false, undefined, null, 0, -0, NaN, ''(빈 문자열)
 * Falsy 값 외의 모든 값은 모두 Truthy 값
+
+### 명시적 타입 변환
+
+* 개발자의 의도에 따라 명시적으로 타입을 변경
+* 표준 빌트인 생성자 함수(String, Number, Boolean)를 new 연산자 없이 호출하는 방법
+* 빌트인 메서드를 사용하는 방법
+* 암묵적 타입 변환을 이용하는 방법
+
+#### 문자열 타입으로 변환
+
+* String 생성자 함수를 new 연산자 없이 호출하는 방법
+* Object.prototype.toString 메서드를 사용하는 방법
+* 문자열 연결 연산자를 이용하는 방법
+
+#### 숫자 타입으로 변환
+
+* Number 생성자 함수를 new 연산자 없이 호출하는 방법
+* parseInt, parseFloat 함수를 사용하는 방법(문자열만 숫자 타입으로 변환 가능)
+* +단항 연산자를 이용하는 방법
+* *산술 연산자를 이용하는 방법
+
+#### 불리언 타입으로 변환
+
+* Boolean 생성자 함수를 new 연산자 없이 호출하는 방법
+* ! 부정 논리 연산자를 두번 사용하는 방법
+
+### 단축 평가
+
+* 논리 연산의 결과를 결정하는 피연산자를 타입 변환하지 않고 그대로 반환
+* 표현식을 평가하는 도중에 평가 결과가 확정된 경우 나머지 평가 과정을 생략
+
+#### 논리 연산자를 사용한 단축 평가
+
+* 논리합(||) 또는 논리곱(&&) 연산자 표현식의 평가 결과는 불리언 값이 아닐 수도 있음
+* 논리합(||) 또는 논리곱(&&) 연산자 표현식은 언제나 2개의 피연산자 중 어느 한쪽으로 평가
+* 자항에서 우항으로 평가가 진행
+* 논리곱 연산자는 두 개의 피연산자가 true로 평가될 때 true를 반환
+* 논리합 연산자는 두 개의 피연산자 중 하나만 true로 평가되어도 true를 반환
+* if 문을 대체할 수 있음(Truthy 값일 때 && 연산자 표현식, Falsy  값일 때 || 연산자 표현식)
+
+```
+단축평가 규칙
+
+true || anything => true
+false || anything => anything
+
+true && anything => anything
+false && anything => false
+```
+
+```
+객체
+
+elem이 Falsy 값이면 elem으로 평가되고, elem이 Truthy 값이면 elem.value로 평가
+
+let elem = null;
+let value = elem && elem.value;
+```
+
+```
+함수
+
+함수 호출할 때 인수를 전달하지 않아도 에러가 발생하는 것을 방지
+
+function getStringLength(str) {
+  str = str || '';
+  return str.length;
+}
+
+// ES6의 매개변수 기본값 설정 방법
+function getStringLength(str = '') {
+  return str.length;
+}
+
+getStringLength(); // => 0(인수를 전달하지 않아도 에러 발생 X)
+```
+
+#### 옵셔널 체이닝 연산자
+
+* ES11에서 도입
+* 좌항의 피연산자가 null 또는 undefined인 경우 undefined를 반환하고, 그렇지 않으면 우항의 프로퍼티 참조를 이어감
+* 객체를 가리키기를 기대하는 변수가 null 또는 undefined가 이닌지 확인하고 프로퍼티를 참조할 때 유용
+
+```
+// elem이 Falsy 값이면 elem으로 평가되고, elem이 Truthy 값이면 elem.value로 평가
+
+let value = elem?.value;
+```
+
+#### null 병합 연산자
+
+* ES11에서 도입
+* 좌항의 피연산자가 null 또는 undefined인 경우 우항의 피연산자를 반환하고, 그렇지 않으면 좌항의 피연산자를 반환
+* 변수에 기본값을 성정할 때 유용
+
+```
+let value = null ?? 'default value';
+```
