@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+{% assign type = page.type %}
+
+<!-- background -->
+<div class="video-bg"{% if page.bg_image != '' %} style="background-image: url({{ page.bg_image | relative_url }});"{% endif %}>
+  {% if page.bg_image == 'map' %}
+  <div class="map" id="map"></div>
+  {% endif %}
+  <div class="video-bg-mask"></div>
+  <div class="video-bg-texture" id="grained_container"></div>
+</div>
+
+{% include section-home-{{ type }}.html %}
