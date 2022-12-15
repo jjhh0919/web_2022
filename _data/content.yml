@@ -101,7 +101,7 @@ skills:
 ### Custom Text [ text ]
 text:
   title: "Custom Text"
-  text: ""
+  text: "<p>열심히 공부하는 중</p>"
 
 ### Contact Info [ contacts-info ]
 contacts_info:
