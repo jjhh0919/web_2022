@@ -1,0 +1,11 @@
+# Home content configuration file
+##
+### here you can find all content for home page
+
+### Started
+started:
+  title: "문준혁's Github page."
+  typed:
+    - "1. HTML / CSS / JavaScript 공부"
+    - "2. 네트워크 공부"
+    - "3. React 공부"
