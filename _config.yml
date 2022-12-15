@@ -23,8 +23,8 @@ title: "문준혁's Blog"
 email: "jjhh0919@gmail.com"
 description: ""
 author: "문준혁"
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "/jjhh0919.github.io/webdev2022" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/webdev2022" # the subpath of your site, e.g. /blog
+url: "/jjhh0919.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 date_format: "%d %B %Y"
 
 # paginations & permalinks

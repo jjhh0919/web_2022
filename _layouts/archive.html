@@ -45,7 +45,7 @@ layout: default
                 <div class="blog-item content-box">
                     <div class="post">
                         <div class="image"> 
-                            <a class="post-thumbnail" href="{{ post.url }}"> 
+                            <a class="post-thumbnail" href="{{ site.baseurl }}{{ post.url }}">
                                 {% if post.image != nil %}
                                 <img src="{{ post.image | relative_url }}" class="wp-post-image" alt="{{ post.title }}" />
                                 {% endif %}
@@ -63,7 +63,7 @@ layout: default
                                 {{ post.date | date: site.date_format }}
                             </div> 
                             <!--<div class="categories">{{ post.categories | join: ", " }}</div>-->
-                            <a href="{{ post.url }}" class="name">{{ post.title }}</a>
+                            <a href="{{ site.baseurl }}{{ post.url }}" class="name">{{ post.title }}</a>
                             <div class="single-post-text">
                                 {{ post.excerpt }}
                             </div>

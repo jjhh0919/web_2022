@@ -16,11 +16,6 @@ main:
     url: "resume/"
     parent: 0
   
-  # Portfolio
-  - title: "Portfolio"
-    url: "https://jjhh0919.github.io"
-    parent: 0
-  
   # Blog
   - title: "Blog"
     url: "blog/"
